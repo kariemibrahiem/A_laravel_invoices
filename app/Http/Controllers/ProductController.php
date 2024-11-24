@@ -91,9 +91,9 @@ class ProductController extends Controller
     {
         try{
             Product::destroy($request->id);
-            session()->flash("success" , "the product udpated successfully");
+            session()->flash("success" , "the product deleted  successfully");
         }catch(Exception $e){
-            session()->flash("field" , "the product udpated successfully");
+            session()->flash("field" , "the product deletion successfully");
         }
         return redirect("products");
     }
