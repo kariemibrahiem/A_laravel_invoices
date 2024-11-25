@@ -23,6 +23,19 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function hotels()
+    {
+        return $this->hasMany(Hotels::class);
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+
+
+
     /**
      * The attributes that should be hidden for serialization.
      *
