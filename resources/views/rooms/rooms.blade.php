@@ -40,53 +40,55 @@
 @section('content')
     <!-- row -->
     <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-header pb-0">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title mg-b-0"><a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo1"> add hotel </a></h4>
+        <div class="col-xl-12">
+            <div class="card">
+                        <div class="card-header pb-0">
+                            <div class="d-flex justify-content-between">
+                                <h4 class="card-title mg-b-0"><a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo1"> add room </a></h4>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table mg-b-0 text-md-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>rooms_num</th>
-                                        <th>tags_num</th>
-                                        <th>facilities_num</th>
-                                        <th>total_price</th>
-                                        <th>net_price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($hotels as $hotel)
-                                    <tr>
-                                        <th>{{ $hotel->id }}</th>
-                                        <th>{{ $hotel->hotel_name }}</th>
-                                        <th>{{ $hotel->rooms()->count() }}</th>
-                                        <th>
-                                            {{-- Total tags for this hotel --}}
-                                            {{ $hotel->rooms->flatMap->tags->count() }}
-                                        </th>
-                                        <th>
-                                            {{ $hotel->rooms->flatMap->facilities->count() }}
-                                        </th>
-                                        <th>{{ $hotel->total_price }}</th>
-                                        <th>{{ $hotel->net_price }}</th>
-                                    </tr>
-                                @endforeach
 
+                    <p class="tx-12 tx-gray-500 mb-2">Example of Valex Simple Table. <a href="">Learn more</a></p>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table mg-b-0 text-md-nowrap">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>room_num</th>
+                                <th>hotel name </th>
+                                <th>status</th>
+                                <th>res_status</th>
+                                <th>book_price</th>
+                                <th>tag number</th>
+                                <th>facility number</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                           @foreach($rooms as $room)
+                               <tr>
+                                   <th>{{$room->id}}</th>
+                                   <th>{{$room->room_num}}</th>
+                                   <th>{{$room->hotels->hotel_name}}</th>
+                                   <th>{{$room->status}}
+                                      <a href="{{route('rooms.updateStatus', $room->id)}}" class="btn btn-sm btn-outline-success"><i class="fa fa-edit"></i></a>
+                                   </th>
+                                   <th>{{$room->res_status}}</th>
+                                   <th>{{$room->book_price}}</th>
+                                   <th>{{$room->tags()->count()}}</th>
+                                   <th>{{$room->facilities()->count()}}</th>
 
-                                </tbody>
-                            </table>
-                        </div>
+                               </tr>
+                           @endforeach
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-    <!-- row closed -->
+        </div>
+        <!-- row closed -->
     </div>
     {{-- the create section --}}
     <div class="modal" id="modaldemo1">
@@ -96,13 +98,20 @@
                     <h6 class="modal-title">Basic Modal</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route("hotels.store")}}" method="POST">
+                    <form action="{{route("rooms.store")}}" method="POST">
                         @csrf
-                        <label calss=" text-success text-xl"  for=""> products name</label>
-                        <input class="form-control" type="text" class="form-control w-75  m-3" placeholder="the name of product " id="product_name"  name="hotel_name">
+                        <label calss=" text-success text-xl"  for=""> room_number</label>
+                        <input class="form-control" type="text" class="form-control w-75  m-3" placeholder="room_number " id="product_name"  name="room_number">
                         <br>
-
-
+                        <select name="hotel_id" class="form-control" id="hotel_id">
+                            @foreach ($hotels as $hotel )
+                                <option value="{{$hotel->id}}">{{$hotel->hotel_name}}</option>
+                            @endforeach
+                        </select>
+                        <br>
+                        <label  calss=" text-success text-xl" for=""> booking_price </label>
+                        <input class="form-control" type="text" class="form-control  w-75 m-3" placeholder="booking_price " id="description" name="booking_price">
+                        <br>
                         <button type="submit" class="btn btn-primary">submit</button>
                     </form>
                 </div>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Hotels extends Model
 {
-    Protected $fillable = [""];
+    Protected $fillable = ["hotel_name" , "user_id"];
 
     public function users(){
         return $this->belongsTo(User::class);

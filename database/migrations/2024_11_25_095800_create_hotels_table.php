@@ -15,11 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string("hotel_name");
             $table->foreignId("user_id")->constrained("users")->onDelete("cascade");
-            $table->integer("rooms_num");
-            $table->integer("tags_num");
-            $table->integer("facilities_num");
-            $table->decimal("total_price");
-            $table->decimal("net_price");
+            $table->integer("rooms_num")->default(0);
+
             $table->timestamps();
         });
     }

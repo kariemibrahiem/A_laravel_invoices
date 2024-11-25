@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
-    Protected $fillable = [];
+    Protected $fillable = ["hotels_id" , "book_price" , "res_status" , "status" ,"room_num"];
 
     public function hotels(){
         return $this->belongsTo(Hotels::class);
     }
 
-    public function bookings()
+    public function booking()
     {
         return $this->hasMany(Booking::class);
     }

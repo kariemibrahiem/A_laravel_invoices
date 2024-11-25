@@ -40,52 +40,55 @@
 @section('content')
     <!-- row -->
     <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-header pb-0">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title mg-b-0"><a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo1"> add hotel </a></h4>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table mg-b-0 text-md-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>rooms_num</th>
-                                        <th>tags_num</th>
-                                        <th>facilities_num</th>
-                                        <th>total_price</th>
-                                        <th>net_price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($hotels as $hotel)
-                                    <tr>
-                                        <th>{{ $hotel->id }}</th>
-                                        <th>{{ $hotel->hotel_name }}</th>
-                                        <th>{{ $hotel->rooms()->count() }}</th>
-                                        <th>
-                                            {{-- Total tags for this hotel --}}
-                                            {{ $hotel->rooms->flatMap->tags->count() }}
-                                        </th>
-                                        <th>
-                                            {{ $hotel->rooms->flatMap->facilities->count() }}
-                                        </th>
-                                        <th>{{ $hotel->total_price }}</th>
-                                        <th>{{ $hotel->net_price }}</th>
-                                    </tr>
-                                @endforeach
-
-
-                                </tbody>
-                            </table>
-                        </div>
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="d-flex justify-content-between">
+                        <h4 class="card-title mg-b-0"><a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo1"> add room </a></h4>
                     </div>
                 </div>
+
+                <p class="tx-12 tx-gray-500 mb-2">Example of Valex Simple Table. <a href="">Learn more</a></p>
             </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table mg-b-0 text-md-nowrap">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>facility name</th>
+                            <th>additional price</th>
+                            <th>room number</th>
+                            <th>proccess</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($facilities as $facility)
+                            <tr>
+                                <th>{{$facility->id}}</th>
+                                <th>{{$facility->facility_name}}</th>
+                                <th>{{$facility->additional_price}}</th>
+                                {{--                                <th>{{$tag->rooms->room_num}}</th>--}}
+                                <th>{{$facility->room->room_num}}</th>
+                                <th>
+                                    <form action="{{route("facilities.destroy" , $facility->id)}}"  method="POST">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                    </form>
+
+                                </th>
+
+
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- row closed -->
     </div>
     {{-- the create section --}}
@@ -96,13 +99,19 @@
                     <h6 class="modal-title">Basic Modal</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route("hotels.store")}}" method="POST">
+                    <form action="{{route("facilities.store")}}" method="POST">
                         @csrf
-                        <label calss=" text-success text-xl"  for=""> products name</label>
-                        <input class="form-control" type="text" class="form-control w-75  m-3" placeholder="the name of product " id="product_name"  name="hotel_name">
+                        <label calss=" text-success text-xl"  for=""> facility name</label>
+                        <input class="form-control" type="text" class="form-control w-75  m-3" placeholder="tag name " id="facility name"  name="facility_name">
+                        <input class="form-control" type="number" class="form-control w-75  m-3" placeholder="additional price " id="product_name"  name="additional_price">
+
                         <br>
-
-
+                        <select name="room_id" class="form-control" id="hotel_id">
+                            @foreach ($rooms as $room )
+                                <option value="{{$room->id}}">{{$room->room_num}}</option>
+                            @endforeach
+                        </select>
+                        <br>
                         <button type="submit" class="btn btn-primary">submit</button>
                     </form>
                 </div>

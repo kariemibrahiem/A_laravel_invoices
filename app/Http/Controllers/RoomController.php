@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hotels;
 use App\Models\Room;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        $rooms = Room::all();
+        $hotels = Hotels::all();
+        return view("rooms.rooms" , compact("rooms" , "hotels"));
     }
 
     /**
@@ -28,7 +31,14 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Room::create([
+            "room_num"=>$request->room_number,
+            "status"=>1,
+            "res_status"=>0,
+            "book_price"=>$request->booking_price,
+            "hotels_id"=>$request->hotel_id,
+        ]);
+        return redirect("/rooms");
     }
 
     /**
@@ -42,9 +52,12 @@ class RoomController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Room $room)
+    public function updateStatus($id )
     {
-        //
+        $room = Room::find($id);
+        $room->status = !$room->status;
+        $room->save();
+        return redirect("/rooms");
     }
 
     /**
@@ -52,7 +65,7 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-        //
+
     }
 
     /**

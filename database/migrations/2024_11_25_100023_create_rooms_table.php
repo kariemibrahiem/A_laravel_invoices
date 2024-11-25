@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->integer("room_num");
-            $table->foreignId("hotel_id")->constrained("hotels")->onDelete("cascade");
-            $table->boolean("status");
-            $table->boolean("res_status");
+            $table->foreignId("hotels_id")->constrained("hotels")->onDelete("cascade");
+            $table->boolean("status" , 1);
+            $table->boolean("res_status" , 0);
             $table->decimal("book_price");
             $table->timestamps();
         });

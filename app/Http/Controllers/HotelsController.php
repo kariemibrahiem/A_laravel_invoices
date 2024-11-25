@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hotels;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HotelsController extends Controller
 {
@@ -12,7 +13,17 @@ class HotelsController extends Controller
      */
     public function index()
     {
-        //
+        $hotels_1 = Hotels::with(['rooms.tags'])
+            ->get()
+            ->map(function ($hotel) {
+                $hotel->total_tags = $hotel->rooms->flatMap(function ($room) {
+                    return $room->tags;
+                })->count();
+                return $hotel;
+            });
+
+        $hotels = Hotels::all();
+        return view("hotels.hotels" , compact("hotels" , "hotels_1"));
     }
 
     /**
@@ -28,7 +39,13 @@ class HotelsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+        Hotels::create([
+            "hotel_name"=>$request->hotel_name,
+            "user_id"=>Auth::user()->id,
+        ]);
+        return redirect("/hotels");
     }
 
     /**

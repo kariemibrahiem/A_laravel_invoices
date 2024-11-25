@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Room;
 use App\Models\Tags;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class TagsController extends Controller
      */
     public function index()
     {
-        //
+        $tags = Tags::all();
+        $rooms = Room::all();
+        return view("tag&facility/tags" , compact("tags" , "rooms"));
     }
 
     /**
@@ -28,7 +31,11 @@ class TagsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Tags::create([
+            "tag_name"=>$request->tag_name,
+            "room_id"=>$request->room_id
+        ]);
+        return redirect("/tags");
     }
 
     /**
@@ -58,8 +65,10 @@ class TagsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tags $tags)
+    public function destroy($id )
     {
-        //
+
+        Tags::destroy($id);
+        return redirect("/tags");
     }
 }
