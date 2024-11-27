@@ -40,61 +40,52 @@
 @section('content')
     <!-- row -->
     <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-header pb-0">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title mg-b-0"><a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo1"> add hotel </a></h4>
-                        </div>
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="d-flex justify-content-between">
+                        <h4 class="card-title mg-b-0"><a class=" btn btn-outline-primary btn-block" href="{{route("booking.create")}}"> create book </a></h4>
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table mg-b-0 text-md-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>rooms_num</th>
-                                        <th>tags_num</th>
-                                        <th>facilities_num</th>
-                                        <th>total_price</th>
-                                        <th>net_price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($hotels as $hotel)
-                                    <tr>
-                                        <th>{{ $hotel->id }}</th>
-                                        <th>{{ $hotel->hotel_name }}</th>
-                                        <th>{{ $hotel->rooms()->count() }}</th>
-                                        <th>
-                                            {{-- Total tags for this hotel --}}
-                                            {{ $hotel->rooms->flatMap->tags->count() }}
-                                        </th>
-                                        <th>
-                                            {{ $hotel->rooms->flatMap->facilities->count() }}
-                                        </th>
-                                        <th>
-                                            {{
-                                                $totalPriceSum = \App\Models\Booking::where('hotel_id', $hotel->id)->sum('total_price')
-                                            }}
-                                        </th>
-                                        <th>
-                                            {{
-                                                $totalPriceSum = \App\Models\Booking::where('hotel_id', $hotel->id)->sum('net_price')
-                                            }}
-                                        </th>
-                                    </tr>
-                                @endforeach
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table mg-b-0 text-md-nowrap">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>booking_name</th>
+                                <th>booking_number</th>
+                                <th>check_in_date</th>
+                                <th>check_out_date</th>
+                                <th>total_price</th>
+                                <th>net_price</th>
+                                <th>status </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($books as $book)
+                                <tr>
+                                    <th>{{ $book->id }}</th>
+                                    <th>{{ $book->booking_name }}</th>
+                                    <th>{{ $book->booking_number }}</th>
+                                    <th>{{ $book->check_in_date }}</th>
+                                    <th>{{ $book->check_out_date }}</th>
+                                    <th>{{ $book->total_price }}</th>
+                                    <th>{{ $book->net_price }}</th>
+                                    <th>{{ $book->status }}</th>
+
+                                </tr>
+                            @endforeach
 
 
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-    <!-- row closed -->
+        </div>
+        <!-- row closed -->
     </div>
     {{-- the create section --}}
     <div class="modal" id="modaldemo1">

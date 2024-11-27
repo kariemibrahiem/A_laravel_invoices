@@ -18,6 +18,7 @@ Route::resource("rooms" , \App\Http\Controllers\RoomController::class);
 Route::get("/rooms/updateStatus/{id}" , [\App\Http\Controllers\RoomController::class , "updateStatus"])->name("rooms.updateStatus");
 Route::resource("tags" , \App\Http\Controllers\TagsController::class);
 Route::resource("facilities" , \App\Http\Controllers\FacilitiesController::class);
+Route::resource("/booking" , \App\Http\Controllers\BookingController::class);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get("/{page" , [AdminController_1::class , "index"])->middleware("auth");

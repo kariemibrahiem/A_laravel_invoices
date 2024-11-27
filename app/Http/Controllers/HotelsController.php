@@ -13,6 +13,8 @@ class HotelsController extends Controller
      */
     public function index()
     {
+
+
         $hotels_1 = Hotels::with(['rooms.tags'])
             ->get()
             ->map(function ($hotel) {

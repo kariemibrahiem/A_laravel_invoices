@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
+    Protected $guarded = [];
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -21,9 +22,6 @@ class Booking extends Model
         return $this->belongsTo(Room::class);
     }
 
-    public function guest(): BelongsTo
-    {
-        return $this->belongsTo(Guest::class);
-    }
+
 
 }
